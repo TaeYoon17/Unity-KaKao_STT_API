@@ -9,3 +9,5 @@
   https://gist.github.com/drawcode/10341911
  2. C# 카카오 음성 API 통신 코드
   https://simonwithwoogi.github.io/posts/kakaovoice/
+3. Open API 음성인식 참고자료
+  https://aiopen.etri.re.kr/
