@@ -1,5 +1,7 @@
-# Unity KaKao_STT_API
+# Unity STT_API
+## 사용 API
  카카오 음성인식 API와 유니티 연동
+ 오픈 음성인식 API와 유니티 연동
  
  
  참고 코드 링크
