@@ -44,20 +44,22 @@ namespace openAPI
             [SerializeField] public int result;
             [SerializeField] public string reason;
             [SerializeField] public returnObj return_object;
+            static public OpenSTT_GET_JSON FromJson(string responseText)=> JsonUtility.FromJson<OpenSTT_GET_JSON>(responseText);
         }
     }
     public class OpenAPI_STT
     {
         private string url;// 통신 URL
-        private HttpWebRequest request;
+        private HttpWebRequest request; //HttP 통신 구조
         private string FiePath; // 음성 파일 저장된 경로
+
         private string audioBase64; // 음성파일 base64로 저장
-        private OpenSTT_POST_JSON post_json;// POST 문자 JSON
-        private string responseText;// GET 문자 그대로 
-        private OpenSTT_GET_JSON get_json; // GET 문자 JSON
+        private OpenSTT_POST_JSON post_json;// POST 문자 JSON 구조 변환
+        private string responseText;// GET 문자 그대로 string형
+        private OpenSTT_GET_JSON get_json; // GET 문자 JSON 구조 변환
         // 지원 언어 코드
         public enum LangCode { none = 0, korean, english, japanese, chinese, spanish, french, german, russian, vietnam, arabic, thailand };
-        static public OpenSTT_GET_JSON getJSON(string text) => JsonUtility.FromJson<OpenSTT_GET_JSON>(text);
+
         public static OpenAPI_STT initSTT(string rest_api_key, LangCode code = LangCode.korean, AudioClip clip = null) =>
             new OpenAPI_STT(rest_api_key, Enum.GetName(typeof(LangCode), code), clip);
         private OpenAPI_STT(string rest_api_key, string code = "", AudioClip clip = null)
@@ -68,6 +70,7 @@ namespace openAPI
             if (clip != null)
             {
                 FiePath = SavWav.Save(clip);
+                Debug.Assert(FiePath.Length > 0, "Path is Empty"); //파일 경로 오류 처리
                 audioBase64 = convertBase64(FiePath);
                 post_json.argument.audio = audioBase64;
                 _ = Post().Request();
@@ -84,9 +87,8 @@ namespace openAPI
         }
         private OpenAPI_STT Post()
         {
-            Debug.Assert(FiePath.Length > 0, "Path is Empty");
-            request = (HttpWebRequest)WebRequest.Create(url); // 해당 URL로 네트웍을 만든
-            request.Headers.Add("Authorization", "1a6f2720-5a64-4d04-a9ce-52f7c2be0910"); // 헤더에 옵션값을 추가한다.
+            Debug.Assert(FiePath.Length > 0, "Path is Empty"); //파일 경로 오류 처리
+            request = (HttpWebRequest)WebRequest.Create(url); // 해당 URL로 네트웍을 만든다.
             request.ContentType = "application/json; charset=UTF-8";// 콘텐츠타입을 명시한다 
             request.Method = "POST"; // get 으로 보낼지 post로 보낼지 명시한다.
             byte[] byteJson = Encoding.UTF8.GetBytes(OpenSTT_POST_JSON.ToJson(post_json)); //Json 파일 통신 규격에 맞추기
@@ -103,7 +105,7 @@ namespace openAPI
                 using (StreamReader sr = new StreamReader(stream)) // 스트림을 읽기 위해 리더를 오픈한다.
                 {
                     responseText = sr.ReadToEnd(); // 스트림의 내용을 읽어서 문자열로 반환해준다.
-                    get_json = JsonUtility.FromJson<OpenSTT_GET_JSON>(responseText);
+                    get_json = OpenSTT_GET_JSON.FromJson(responseText);
                 }
             }
             return this;
@@ -127,3 +129,5 @@ namespace openAPI
         public OpenSTT_GET_JSON getJSON() => get_json;
     }
 }
+
+//request.Headers.Add("Authorization", "1a6f2720-5a64-4d04-a9ce-52f7c2be0910"); // 헤더에 옵션값을 추가한다.
