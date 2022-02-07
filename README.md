@@ -1,7 +1,5 @@
-# Unity STT_API
-## 사용 API
+# Unity KaKao_STT_API
  카카오 음성인식 API와 유니티 연동
- 오픈 음성인식 API와 유니티 연동
  
  
  참고 코드 링크
@@ -9,5 +7,3 @@
   https://gist.github.com/drawcode/10341911
  2. C# 카카오 음성 API 통신 코드
   https://simonwithwoogi.github.io/posts/kakaovoice/
-3. Open API 음성인식 참고자료
-  https://aiopen.etri.re.kr/
