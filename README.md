@@ -10,3 +10,14 @@ https://sage-crowley-0ac.notion.site/REST-API-526dd2ade47f420bb1fa761debb43802
   https://gist.github.com/drawcode/10341911
  2. C# 카카오 음성 API 통신 코드
   https://simonwithwoogi.github.io/posts/kakaovoice/
+ 사용법:
+ 0. 모든 파일 임포트
+ 1. STT_Event 파일을 사용한다.
+ 2. 이벤트를 트리거 할 상황에 STT_Event 클래스에 onEvent() 호출
+ 3. 이벤트 내부 로직은 STT_Event 클래스에 addEvent()에 작성
+ ---내부 구현---
+ onEvent(){
+ ... 비동기를 위하 이것 저것 ...
+ addEvent()
+ ...
+ }
