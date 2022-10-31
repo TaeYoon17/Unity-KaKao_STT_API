@@ -3,7 +3,7 @@
  ETRI 음성인식 API와 유니티 연동
 ## 주의사항
 내부 구현에 C# Nuget 매니저를 사용해 모바일에 적합하지 않습니다.
-코드 설명 링크
+###코드 설명 링크
 https://sage-crowley-0ac.notion.site/REST-API-526dd2ade47f420bb1fa761debb43802
 
  참고 코드 링크
